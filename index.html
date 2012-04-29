@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Scala on Android by rohansingh</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Scala on Android</h1>
+        <p>Simple proof-of-concept for an Android project using Scala and Maven.</p>
+        <p class="view"><a href="https://github.com/rohansingh/android-scala-test">View the Project on GitHub <small>rohansingh/android-scala-test</small></a></p>
+        <ul>
+          <li><a href="https://github.com/rohansingh/android-scala-test/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/rohansingh/android-scala-test/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/rohansingh/android-scala-test">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>This is a simple proof-of-concept for an Android project using <a href="http://www.scala-lang.org/">Scala</a>
+and <a href="http://code.google.com/p/maven-android-plugin/">Maven</a>. It is only slightly
+more complicated than "Hello World".</p>
+
+<p>Currently, this project targets Scala 2.9.2. You can use it in two ways:</p>
+
+<ol>
+<li><p>Just clone and build the project (setup and build instructions are below) to see a working
+proof-of-concept of using Scala to create Android apps.</p></li>
+<li><p>Fork the project and use it as a base for an Android app that you would like to write in Scala.</p></li>
+</ol><h2>Why?</h2>
+
+<p>There's a few reasons for this project:</p>
+
+<ul>
+<li><p>Building Scala for Android requires specific <a href="http://developer.android.com/guide/developing/tools/proguard.html">ProGuard</a>
+<a href="http://proguard.sourceforge.net/index.html#manual/usage.html">configuration</a> in order to bring the built
+app down to a reasonable size (or even a size that works with Dalvik), while not accidentally
+optimizing away necessary dependencies.</p></li>
+<li><p>Using Maven provides a repeatable and portable build process, but the pom.xml needed to use
+the <a href="http://code.google.com/p/maven-android-plugin/">android-maven-plugin</a> with Scala is not
+entirely obvious.</p></li>
+<li><p>Other projects like this exist, but they are targeting outdated versions of android-maven-plugin,
+older versions of Scala, missing features like release-mode APK signing, or simply don't work for
+other reasons.</p></li>
+</ul><p>The "why" of using Scala instead of Java is beyond the scope of this document, though.</p>
+
+<h2>Roadmap</h2>
+
+<ul>
+<li><p>Package this project into a Maven archetype. This would make it easy to start brand new Scala on
+Android projects by just running <code>mvn archetype:generate</code>.</p></li>
+<li><p>Add a skeleton of some sort for adding unit tests.</p></li>
+</ul><h2>Prerequisites</h2>
+
+<ul>
+<li>Maven 3 (<code>brew install maven</code> or <code>apt-get install maven3</code>)</li>
+<li>Android SDK</li>
+</ul><h2>Setup</h2>
+
+<ol>
+<li>
+<p>If you don't have the Android SDK, it is available at:
+<a href="http://developer.android.com/sdk/">http://developer.android.com/sdk/</a></p>
+
+<p>Note that after you download the SDK starter package from the link
+above, you must use the installer to install the version of the
+Android SDK targeted by the app. As of the time of this writing,
+that is Android 2.2.</p>
+
+<p>After you have the Android SDK installed, set the <code>ANDROID_HOME</code>
+environment variable. For example, on my machine:</p>
+
+<pre><code>$ export ANDROID_HOME=/opt/google/android-sdk
+</code></pre>
+
+<p>The location of the SDK is likely to be different on your machine.</p>
+</li>
+<li>
+<p>Deploy the Android SDK to your local Maven repository:</p>
+
+<pre><code>$ cd /tmp
+$ export ANDROID_HOME=&lt;your-android-sdk-path&gt;
+$ git clone https://github.com/mosabua/maven-android-sdk-deployer.git
+$ cd maven-android-sdk-deployer
+$ mvn install -P 2.2
+</code></pre>
+
+<p>The <code>-P 2.2</code> in the final command specifies the version of the
+Android SDK to deploy. As of the time of this writing, the app
+targets the 2.2 SDK.</p>
+
+<p>The deployer may fail due to being unable to find certain files. If this
+happens: (a) make sure you have the <code>$ANDROID_HOME</code> location properly set
+and (b) open the Android SDK tool and make sure you have the necessary
+SDK's and API versions downloaded.</p>
+
+<p>If the deployer complains that a file is missing, look closely at
+the path. You may have the same file but in a path where some of
+the hyphens are instead underscores. If this is the case, just link
+the path that the deployer is searching for to the correct one.</p>
+</li>
+<li>
+<p>Install libraries to local repository:</p>
+
+<pre><code>$ chmod +x install-libs.sh
+$ ./install-libs.sh
+</code></pre>
+</li>
+<li>
+<p>If you are using OS X, also run:</p>
+
+<pre><code>$ ./link-jars-for-osx.sh
+</code></pre>
+</li>
+</ol><h2>Build</h2>
+
+<p>You can build using Maven:</p>
+
+<pre><code>$ mvn clean install
+</code></pre>
+
+<p>This will compile the project and generate an APK. The generated APK is
+signed with the Android debug certificate. To generate a zip-aligned APK
+that is signed with an actual certificate, use:</p>
+
+<pre><code>$ mvn clean install -Prelease
+</code></pre>
+
+<p>The configuration for which certificate to use is in pom.xml.</p>
+
+<h2>Run</h2>
+
+<p>Setup and start an Android virtual device, or connect a dev device.
+You can setup and run virtual device using:</p>
+
+<pre><code>$ &lt;your-android-sdk-path&gt;/bin/android avd
+</code></pre>
+
+<p>Deploy to the virtual/dev device:</p>
+
+<pre><code>$ mvn android:deploy
+</code></pre>
+
+<h2>Using an IDE</h2>
+
+<p>You can use Maven to generate project files for Eclipse or IDEA:</p>
+
+<pre><code>$ mvn eclipse:eclipse
+$ mvn idea:idea
+</code></pre>
+
+<p>Once the project files are generated, your IDE should be able to open
+the project. Depending on your IDE's configuration, it may not be able
+to build the project. You can always build using the Maven command line
+as detailed in this readme.</p>
+
+<h2>Further Reading</h2>
+
+<ul>
+<li><a href="http://code.google.com/p/maven-android-plugin/">Android Maven Plugin</a></li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/rohansingh">rohansingh</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-17515286-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
