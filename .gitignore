@@ -1,0 +1,9 @@
+*.iml
+*.ipr
+*.iws
+target
+gen
+.DS_Store
+.cache
+.classpath
+.project
