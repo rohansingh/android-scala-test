@@ -53,7 +53,7 @@ Setup
    Android SDK targeted by the app. As of the time of this writing,
    that is Android 2.2.
 
-   After you have the Android SDK installed, set the `ANDROID\_HOME`
+   After you have the Android SDK installed, set the `ANDROID_HOME`
    environment variable. For example, on my machine:
 
         $ export ANDROID_HOME=/opt/google/android-sdk
@@ -75,15 +75,15 @@ Setup
    The deployer may fail due to being unable to find certain files. If this
    happens:
 
-     1. Make sure you have the $ANDROID_HOME location properly set.
+   * Make sure you have the `$ANDROID_HOME` location properly set.
 
-     2. Open the Android SDK tool and make sure you have the necessary
-        SDK's and API versions downloaded.
+   * Open the Android SDK tool and make sure you have the necessary
+     SDK's and API versions downloaded.
 
-     3. If the deployer complains that a file is missing, look closely at
-        the path. You may have the same file but in a path where some of
-        the hyphens are instead underscores. If this is the case, just link
-        the path that the deployer is searching for to the correct one.
+   * If the deployer complains that a file is missing, look closely at
+     the path. You may have the same file but in a path where some of
+     the hyphens are instead underscores. If this is the case, just link
+     the path that the deployer is searching for to the correct one.
 
 3. Install libraries to local repository:
 
