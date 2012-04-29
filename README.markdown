@@ -1,11 +1,42 @@
-Android Scala Test
+Scala on Android
 ==================
 
-This is a simple proof-of-concept for an Android project using Scala and Maven. It is only slightly
-more complicated than "Hello World". I am just using it as a way to remember the specific Maven and
-ProGuard configuration that's needed to build a Scala project for Android.
+This is a simple proof-of-concept for an Android project using [Scala](http://www.scala-lang.org/)
+and [Maven](http://code.google.com/p/maven-android-plugin/). It is only slightly
+more complicated than "Hello World".
 
-Currently, this project targets Scala 2.9.2.
+Currently, this project targets Scala 2.9.2. You can use it in two ways:
+
+1. Just clone and build the project (setup and build instructions are below) to see a working
+   proof-of-concept of using Scala to create Android apps.
+
+2. Fork the project and use it as a base for an Android app that you would like to write in Scala.
+
+Why?
+----
+There's a few reasons for this project:
+
+* Building Scala for Android requires specific [ProGuard](http://developer.android.com/guide/developing/tools/proguard.html)
+  [configuration](http://proguard.sourceforge.net/index.html#manual/usage.html) in order to bring the built
+  app down to a reasonable size (or even a size that works with Dalvik), while not accidentally
+  optimizing away necessary dependencies.
+
+* Using Maven provides a repeatable and portable build process, but the pom.xml needed to use
+  the [android-maven-plugin](http://code.google.com/p/maven-android-plugin/) with Scala is not
+  entirely obvious.
+
+* Other projects like this exist, but they are targeting outdated versions of android-maven-plugin,
+  older versions of Scala, missing features like release-mode APK signing, or simply don't work for
+  other reasons.
+
+The "why" of using Scala instead of Java is beyond the scope of this document, though.
+
+Roadmap
+-------
+* Package this project into a Maven archetype. This would make it easy to start brand new Scala on
+  Android projects by just running `mvn archetype:generate`.
+
+* Add a skeleton of some sort for adding unit tests.
 
 Prerequisites
 -------------
