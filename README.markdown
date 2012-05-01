@@ -82,12 +82,7 @@ Setup
    the hyphens are instead underscores. If this is the case, just link
    the path that the deployer is searching for to the correct one.
  
-3. Install libraries to local repository:
-
-        $ chmod +x install-libs.sh
-        $ ./install-libs.sh
-
-4. If you are using OS X, also run:
+3. If you are using OS X, also run:
 
         $ ./link-jars-for-osx.sh
 
