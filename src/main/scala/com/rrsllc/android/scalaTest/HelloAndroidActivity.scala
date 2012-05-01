@@ -1,4 +1,4 @@
-package com.rrsllc.com.android.scalaTest
+package com.rrsllc.android.scalaTest
 
 import android.app.Activity
 import android.os.Bundle

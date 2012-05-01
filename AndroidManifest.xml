@@ -5,7 +5,7 @@
   <uses-sdk android:minSdkVersion="7" />
 
   <application android:label="@string/app_name">
-    <activity android:name="com.rrsllc.com.android.scalaTest.HelloAndroidActivity">
+    <activity android:name="com.rrsllc.android.scalaTest.HelloAndroidActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
